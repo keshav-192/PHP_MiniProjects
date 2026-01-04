@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Admission Counseling</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e3f2fd, #f5f7fa);
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .logo-container {
+            margin-bottom: 15px;
+        }
+        
+        .college-logo {
+            max-width: 420px;
+            height: auto;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+        }
+        
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            padding: 32px;
+            border: 1px solid #e5e9f0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d0d7e2;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #f9fafb;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border-color: #3498db;
+            background-color: #ffffff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.20);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .file-input {
+            padding: 8px 0;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #3498db, #1d72b8);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.1s ease;
+            width: 100%;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #2e86c1, #18639d);
+            box-shadow: 0 8px 18px rgba(24, 99, 157, 0.35);
+            transform: translateY(-1px);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(24, 99, 157, 0.25);
+        }
+        
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .valid {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .success {
+            color: #27ae60;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            padding: 10px;
+            background-color: #d5f4e6;
+            border-radius: 4px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e4ec;
+            gap: 8px;
+        }
+        
+        .nav-tab {
+            padding: 10px 18px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 15px;
+            color: #7f8c8d;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+        
+        .nav-tab.active {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            background-color: rgba(52, 152, 219, 0.08);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .search-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .search-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+        }
+        
+        .search-btn:hover {
+            background-color: #27ae60;
+            box-shadow: 0 6px 14px rgba(39, 174, 96, 0.35);
+            transform: translateY(-1px);
+        }
+        
+        .student-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .student-details h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            width: 150px;
+            color: #7f8c8d;
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .file-links a {
+            display: inline-block;
+            margin-right: 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .file-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .phone-format {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <!-- Replace with your actual college logo path -->
+                <img src="Screenshot 2025-10-22 224629.png" alt="College Logo" class="college-logo">
+            </div>
+            <h1>College Admission Counseling</h1>
+            <p>Submit your information for admission consideration</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="form-tab">Submit Form</button>
+            <button class="nav-tab" data-tab="search-tab">Search Student</button>
+        </div>
+        
+        <div class="tab-content active" id="form-tab">
+            <div class="form-container">
+                <form id="admissionForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="counseling_id">Counseling ID *</label>
+                        <input type="text" id="counseling_id" name="counseling_id" placeholder="e.g., VU1234" required>
+                        <div class="error" id="counseling_id_error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first_name">First Name *</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="Enter first name" required>
+                        <div class="error" id="first_name_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="last_name">Last Name *</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Enter last name" required>
+                        <div class="error" id="last_name_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="Use allowed domains (e.g., yourname@gmail.com)" required>
+                        <div class="error" id="email_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="text" id="phone" name="phone" placeholder="10 digits, e.g., 9876543210" required>
+                        <div class="error" id="phone_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address *</label>
+                        <textarea id="address" name="address" placeholder="Maximum 50 words and 1000 letters" required></textarea>
+                        <div class="error" id="address_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="photo">Upload Photo (JPEG only) *</label>
+                        <input type="file" id="photo" name="photo" class="file-input" accept=".jpg,.jpeg" required>
+                        <div class="error" id="photo_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="intermediate_certificate">Upload Intermediate Marks Certificate (PDF only) *</label>
+                        <input type="file" id="intermediate_certificate" name="intermediate_certificate" class="file-input" accept=".pdf" required>
+                        <div class="error" id="intermediate_certificate_error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tenth_certificate">Upload Tenth Marks Certificate (PDF only) *</label>
+                        <input type="file" id="tenth_certificate" name="tenth_certificate" class="file-input" accept=".pdf" required>
+                        <div class="error" id="tenth_certificate_error"></div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                    <div id="form-message"></div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="search-tab">
+            <div class="form-container">
+                <div class="search-form">
+                    <input type="text" id="search_id" class="search-input" placeholder="Enter Counseling ID">
+                    <button type="button" id="search-btn" class="search-btn">Search Student</button>
+                </div>
+                <div id="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Client-side validation helpers
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const nameRegex = /^[A-Za-z\s]+$/;
+        // Phone: Indian-style 10-digit mobile starting with 6–9
+        const phoneRegex = /^[6-9]\d{9}$/;
+        // Counseling ID: exactly 6 characters -> 'VU' + 4 digits
+        const counselingIdRegex = /^VU\d{4}$/;
+        let counselingIdInUse = false;
+        let emailInUse = false;
+
+        function isInstitutionEmail(email) {
+            const basic = emailRegex.test(email);
+            if (!basic) return false;
+            const atIdx = email.lastIndexOf('@');
+            const domain = atIdx !== -1 ? email.slice(atIdx + 1).toLowerCase() : '';
+            if (!domain) return false;
+            const allowedDomains = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','proton.me','vignan.ac.in'];
+            if (allowedDomains.includes(domain)) return true;
+            return /(\.ac\.in|\.edu(\.in)?)$/i.test(domain);
+        }
+
+        function setError(id, message) {
+            const el = document.getElementById(id);
+            el.textContent = message;
+            el.className = 'error';
+        }
+
+        function setValid(id) {
+            const el = document.getElementById(id);
+            el.textContent = 'Valid';
+            el.className = 'valid';
+        }
+
+        function validateCounselingId() {
+            const input = document.getElementById('counseling_id');
+            const value = input.value.trim();
+
+            if (!value) {
+                setError('counseling_id_error', 'Counseling ID is required');
+                return false;
+            }
+
+            if (!counselingIdRegex.test(value)) {
+                setError('counseling_id_error', 'Counseling ID must be VU followed by 4 digits (e.g., VU1234)');
+                return false;
+            }
+
+            setValid('counseling_id_error');
+            return true;
+        }
+
+        function normalizeName(value) {
+            // Trim extra spaces and collapse multiple spaces into one
+            const trimmed = value.trim().replace(/\s+/g, ' ');
+            if (!trimmed) return '';
+            // Make entire string lowercase, then capitalize first letter of each word
+            return trimmed
+                .toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
+
+        function validateFirstName() {
+            const input = document.getElementById('first_name');
+            let value = input.value;
+
+            if (!value.trim()) {
+                setError('first_name_error', 'First Name is required');
+                return false;
+            }
+
+            if (!nameRegex.test(value)) {
+                setError('first_name_error', 'First Name must contain only letters and spaces');
+                return false;
+            }
+
+            // Normalize and enforce first letter capital, rest small (per word)
+            value = normalizeName(value);
+            input.value = value;
+
+            // Final check after normalization
+            if (!nameRegex.test(value)) {
+                setError('first_name_error', 'First Name must contain only letters and spaces');
+                return false;
+            }
+
+            setValid('first_name_error');
+            return true;
+        }
+
+        function validateLastName() {
+            const input = document.getElementById('last_name');
+            let value = input.value;
+
+            if (!value.trim()) {
+                setError('last_name_error', 'Last Name is required');
+                return false;
+            }
+
+            if (!nameRegex.test(value)) {
+                setError('last_name_error', 'Last Name must contain only letters and spaces');
+                return false;
+            }
+
+            // Normalize and enforce first letter capital, rest small (per word)
+            value = normalizeName(value);
+            input.value = value;
+
+            // Final check after normalization
+            if (!nameRegex.test(value)) {
+                setError('last_name_error', 'Last Name must contain only letters and spaces');
+                return false;
+            }
+
+            setValid('last_name_error');
+            return true;
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                setError('email_error', 'Email is required');
+                emailInUse = false;
+                return false;
+            }
+            if (!isInstitutionEmail(email)) {
+                setError('email_error', 'Use gmail/yahoo/outlook/hotmail/icloud/proton.me or *.ac.in/*.edu domains.');
+                emailInUse = false;
+                return false;
+            }
+
+            setValid('email_error');
+            return true;
+        }
+
+        function checkEmailUniqueness() {
+            const email = document.getElementById('email').value.trim();
+
+            if (!email) {
+                emailInUse = false;
+                return;
+            }
+            if (!isInstitutionEmail(email)) {
+                emailInUse = false;
+                return;
+            }
+
+            fetch(`check_email.php?email=${encodeURIComponent(email)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.exists) {
+                        emailInUse = true;
+                        setError('email_error', 'Email already registered');
+                    } else {
+                        emailInUse = false;
+
+                        if (document.getElementById('email').value.trim()) {
+                            setValid('email_error');
+                        }
+                    }
+                })
+                .catch(() => {
+                    // On error, don't block; server-side still validates
+                    emailInUse = false;
+                });
+        }
+
+        function checkCounselingIdUniqueness() {
+            const counselingId = document.getElementById('counseling_id').value.trim();
+
+            if (!counselingId) {
+                counselingIdInUse = false;
+                return;
+            }
+            if (!counselingIdRegex.test(counselingId)) {
+                counselingIdInUse = false;
+                return;
+            }
+
+            fetch(`search_student.php?counseling_id=${encodeURIComponent(counselingId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        counselingIdInUse = true;
+                        setError('counseling_id_error', 'Application from this Counseling ID is already submitted');
+                    } else {
+                        counselingIdInUse = false;
+                        if (document.getElementById('counseling_id').value.trim() && counselingIdRegex.test(counselingId)) {
+                            setValid('counseling_id_error');
+                        }
+                    }
+                })
+                .catch(() => {
+                    // On error, don't block; server-side still validates
+                    counselingIdInUse = false;
+                });
+        }
+
+        function validatePhone() {
+            const phone = document.getElementById('phone').value.trim();
+            if (!phone) {
+                setError('phone_error', 'Phone number is required');
+                return false;
+            }
+            if (!phoneRegex.test(phone)) {
+                setError('phone_error', 'Phone number must be an Indian-style 10-digit mobile number starting with 6–9');
+                return false;
+            }
+            setValid('phone_error');
+            return true;
+        }
+
+        function validatePhotoFile() {
+            const input = document.getElementById('photo');
+            const file = input.files[0];
+            if (!file) {
+                setError('photo_error', 'Photo is required');
+                return false;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                setError('photo_error', 'Photo must not exceed 5MB');
+                input.value = '';
+                return false;
+            }
+            setValid('photo_error');
+            return true;
+        }
+
+        function validateIntermediateFile() {
+            const input = document.getElementById('intermediate_certificate');
+            const file = input.files[0];
+            if (!file) {
+                setError('intermediate_certificate_error', 'Intermediate certificate is required');
+                return false;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                setError('intermediate_certificate_error', 'Intermediate certificate must not exceed 5MB');
+                input.value = '';
+                return false;
+            }
+            // Prevent same file as tenth certificate
+            const tenthInput = document.getElementById('tenth_certificate');
+            const tenthFile = tenthInput.files[0];
+            if (tenthFile && file.name === tenthFile.name && file.size === tenthFile.size) {
+                setError('intermediate_certificate_error', 'Intermediate and Tenth certificates must be different files');
+                input.value = '';
+                return false;
+            }
+            setValid('intermediate_certificate_error');
+            return true;
+        }
+
+        function validateTenthFile() {
+            const input = document.getElementById('tenth_certificate');
+            const file = input.files[0];
+            if (!file) {
+                setError('tenth_certificate_error', 'Tenth certificate is required');
+                return false;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                setError('tenth_certificate_error', 'Tenth certificate must not exceed 5MB');
+                input.value = '';
+                return false;
+            }
+            // Prevent same file as intermediate certificate
+            const intermediateInput = document.getElementById('intermediate_certificate');
+            const intermediateFile = intermediateInput.files[0];
+            if (intermediateFile && file.name === intermediateFile.name && file.size === intermediateFile.size) {
+                setError('tenth_certificate_error', 'Intermediate and Tenth certificates must be different files');
+                input.value = '';
+                return false;
+            }
+            setValid('tenth_certificate_error');
+            return true;
+        }
+
+        // Attach per-field validation on blur
+
+        document.getElementById('counseling_id').addEventListener('blur', function () {
+            if (validateCounselingId()) {
+                checkCounselingIdUniqueness();
+            }
+        });
+
+        document.getElementById('first_name').addEventListener('blur', validateFirstName);
+        document.getElementById('last_name').addEventListener('blur', validateLastName);
+        document.getElementById('email').addEventListener('blur', function () {
+            if (validateEmail()) {
+                checkEmailUniqueness();
+            }
+        });
+
+        // Restrict phone input to digits only and max length 10
+        document.getElementById('phone').addEventListener('input', function () {
+            // Remove all non-digit characters
+            let digits = this.value.replace(/[^0-9]/g, '');
+            // Limit to 10 digits
+            if (digits.length > 10) {
+                digits = digits.slice(0, 10);
+            }
+            this.value = digits;
+        });
+
+        // Validate phone on blur so message shows below the box
+        document.getElementById('phone').addEventListener('blur', validatePhone);
+
+        // Validate files on change so oversize PDFs/photos are rejected immediately
+        document.getElementById('photo').addEventListener('change', validatePhotoFile);
+        document.getElementById('intermediate_certificate').addEventListener('change', validateIntermediateFile);
+        document.getElementById('tenth_certificate').addEventListener('change', validateTenthFile);
+
+        // Form validation and submission
+        document.getElementById('admissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors/valid messages
+            document.querySelectorAll('.error, .valid').forEach(el => {
+                el.textContent = '';
+                el.className = 'error';
+            });
+            document.getElementById('form-message').textContent = '';
+            
+            // Validate form
+            let isValid = true;
+            
+            if (!validateCounselingId()) isValid = false;
+            if (counselingIdInUse) {
+                setError('counseling_id_error', 'Application from this Counseling ID is already submitted');
+                isValid = false;
+            }
+            
+            if (!validateFirstName()) isValid = false;
+            if (!validateLastName()) isValid = false;
+            if (!validateEmail()) isValid = false;
+            if (emailInUse) {
+                setError('email_error', 'Email already registered');
+                isValid = false;
+            }
+
+            if (!validatePhone()) isValid = false;
+            
+            // Address validation
+            const address = document.getElementById('address').value.trim();
+            if (!address) {
+                setError('address_error', 'Address is required');
+                isValid = false;
+            } else {
+                const words = address.split(/\s+/).filter(w => w.length > 0);
+                if (words.length > 50) {
+                    setError('address_error', 'Address must not exceed 50 words');
+                    isValid = false;
+                } else {
+                    const lettersCount = (address.match(/[A-Za-z]/g) || []).length;
+                    if (lettersCount > 1000) {
+                        setError('address_error', 'Address must not exceed 1000 alphabet characters');
+                        isValid = false;
+                    } else {
+                        setValid('address_error');
+                    }
+                }
+            }
+
+            const photo = document.getElementById('photo').files[0];
+            if (!photo) {
+                setError('photo_error', 'Photo is required');
+                isValid = false;
+            } else if (photo.size > 5 * 1024 * 1024) {
+                setError('photo_error', 'Photo must not exceed 5MB');
+                isValid = false;
+            } else if (!['image/jpeg', 'image/jpg'].includes(photo.type)) {
+                setError('photo_error', 'Photo must be a JPEG file');
+                isValid = false;
+            }
+
+            const intermediateCert = document.getElementById('intermediate_certificate').files[0];
+            if (!intermediateCert) {
+                setError('intermediate_certificate_error', 'Intermediate certificate is required');
+                isValid = false;
+            } else if (intermediateCert.size > 5 * 1024 * 1024) {
+                setError('intermediate_certificate_error', 'Intermediate certificate must not exceed 5MB');
+                isValid = false;
+            } else if (intermediateCert.type !== 'application/pdf') {
+                setError('intermediate_certificate_error', 'Intermediate certificate must be a PDF file');
+                isValid = false;
+            }
+
+            const tenthCert = document.getElementById('tenth_certificate').files[0];
+            if (!tenthCert) {
+                setError('tenth_certificate_error', 'Tenth certificate is required');
+                isValid = false;
+            } else if (tenthCert.size > 5 * 1024 * 1024) {
+                setError('tenth_certificate_error', 'Tenth certificate must not exceed 5MB');
+                isValid = false;
+            } else if (tenthCert.type !== 'application/pdf') {
+                setError('tenth_certificate_error', 'Tenth certificate must be a PDF file');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const formData = new FormData(this);
+
+                fetch('submit_form.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('form-message').className = 'success';
+                        document.getElementById('form-message').textContent = 'Application submitted successfully!';
+                        document.getElementById('admissionForm').reset();
+                        // Hide success message after 1.5 seconds
+                        setTimeout(() => {
+                            const msgEl = document.getElementById('form-message');
+                            if (msgEl.className === 'success') {
+                                msgEl.textContent = '';
+                                msgEl.className = '';
+                            }
+                        }, 1500);
+                    } else {
+                        if (data.message === 'Counseling ID already exists') {
+                            setError('counseling_id_error', data.message);
+                        } else if (data.message === 'Email already registered') {
+                            setError('email_error', data.message);
+                        }
+                        document.getElementById('form-message').className = 'error';
+                        document.getElementById('form-message').textContent = data.message || 'An error occurred. Please try again.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('form-message').className = 'error';
+                    document.getElementById('form-message').textContent = 'An error occurred. Please try again.';
+                });
+            }
+        });
+        
+        // Search functionality
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const counselingId = document.getElementById('search_id').value.trim();
+            const resultsDiv = document.getElementById('search-results');
+            
+            if (!counselingId) {
+                resultsDiv.innerHTML = '<div class="error">Please enter a Counseling ID</div>';
+                return;
+            }
+            
+            fetch(`search_student.php?counseling_id=${encodeURIComponent(counselingId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const student = data.student;
+                        resultsDiv.innerHTML = `
+                            <div class="student-details">
+                                <h3>Student Details</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Counseling ID:</div>
+                                    <div class="detail-value">${student.counseling_id}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Name:</div>
+                                    <div class="detail-value">${student.first_name} ${student.last_name}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Email:</div>
+                                    <div class="detail-value">${student.email}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Phone:</div>
+                                    <div class="detail-value">${student.phone}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Address:</div>
+                                    <div class="detail-value">${student.address}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Documents:</div>
+                                    <div class="detail-value file-links">
+                                        <a href="uploads/${student.photo}" target="_blank">View Photo</a>
+                                        <a href="uploads/${student.intermediate_certificate}" target="_blank">Intermediate Certificate</a>
+                                        <a href="uploads/${student.tenth_certificate}" target="_blank">Tenth Certificate</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        resultsDiv.innerHTML = `<div class="error">${data.message}</div>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultsDiv.innerHTML = '<div class="error">An error occurred. Please try again.</div>';
+                });
+        });
+    </script>
+</body>
+</html>
